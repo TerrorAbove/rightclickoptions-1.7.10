@@ -1,0 +1,184 @@
+package com.terrorAndBlue.rightClickOptions.trade;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import com.terrorAndBlue.rightClickOptions.RightClickOptions;
+import com.terrorAndBlue.rightClickOptions.gui.TradeGUI;
+import com.terrorAndBlue.rightClickOptions.packet.GuiActionPacket;
+import com.terrorAndBlue.rightClickOptions.packet.SessionCheckPacket;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+
+public class TradeSession
+{
+	private EntityPlayer player_0;//may need to switch to storing entity ID's rather than Player objects
+	private EntityPlayer player_1;
+	
+	private long timeStarted;
+	
+	private Status status;
+	
+	private Timer timer;
+	
+	private boolean p0_accepted;
+	private boolean p1_accepted;
+	
+	/**
+	 * Instantiates and "starts" a trade session between two players.
+	 */
+	public TradeSession(EntityPlayer a, EntityPlayer b)
+	{
+		assert a != null && b != null;
+		
+		player_0 = a;
+		player_1 = b;
+		
+		p0_accepted = false;
+		p1_accepted = false;
+		
+		updateInfoString();
+		
+		timeStarted = System.currentTimeMillis();
+		
+		status = Status.INCOMPLETE;
+		
+		timer = new Timer();
+	}
+	
+	public TradeSession beginTask(long startDelay, long interval)
+	{
+		timer.scheduleAtFixedRate(new TimerTask()
+		{
+			private boolean p0 = false;
+			
+			@Override
+			public void run()
+			{
+				if(status == Status.CANCELLED || status == Status.DENIED)
+				{
+					this.cancel();
+					return;
+				}
+
+				if(p0_accepted && p1_accepted)
+				{
+					status = Status.ACCEPTED;
+					if(player_0.openContainer instanceof TradeContainer && player_1.openContainer instanceof TradeContainer)
+					{
+						TradeContainer c0 = (TradeContainer)player_0.openContainer;
+						TradeContainer c1 = (TradeContainer)player_1.openContainer;
+
+						c0.doTradeAcceptedSwap();
+						c1.doTradeAcceptedSwap();
+					}
+					return;
+				}
+
+				if(p0)
+					RightClickOptions.wrapper.sendTo(new SessionCheckPacket(), (EntityPlayerMP)player_0);
+				else
+					RightClickOptions.wrapper.sendTo(new SessionCheckPacket(), (EntityPlayerMP)player_1);
+
+				p0 = !p0;
+			}
+		}, startDelay, interval);
+		
+		return this;
+	}
+	
+	public void setStatus(Status status)
+	{
+		this.status = status;
+	}
+	
+	public EntityPlayer getP()
+	{
+		return player_0;
+	}
+	
+	public EntityPlayer getP2()
+	{
+		return player_1;
+	}
+	
+	public Status getStatus()
+	{
+		return status;
+	}
+	
+	public long getTimeStarted()
+	{
+		return timeStarted;
+	}
+	
+	public void setP0Accepted(boolean accepted)
+	{
+		p0_accepted = accepted;
+		updateInfoString();
+	}
+	
+	public void setP1Accepted(boolean accepted)
+	{
+		p1_accepted = accepted;
+		updateInfoString();
+	}
+	
+	public boolean isP0Accepting()
+	{
+		return p0_accepted;
+	}
+	
+	public boolean isP1Accepting()
+	{
+		return p1_accepted;
+	}
+	
+	public void updateInfoString()
+	{
+		try
+		{
+			if(p0_accepted)
+			{
+				if(p1_accepted)
+				{
+					player_0.getEntityData().setString(TradeInventory.TAG_NAME + "_infoString", "Trade Confirmed!");
+					player_1.getEntityData().setString(TradeInventory.TAG_NAME + "_infoString", "Trade Confirmed!");
+				}
+				else
+				{
+					player_0.getEntityData().setString(TradeInventory.TAG_NAME + "_infoString", "Waiting for other player to accept...");
+					player_1.getEntityData().setString(TradeInventory.TAG_NAME + "_infoString", "The other player has accepted the trade.");
+				}
+			}
+			else
+			{
+				if(p1_accepted)
+				{
+					player_1.getEntityData().setString(TradeInventory.TAG_NAME + "_infoString", "Waiting for other player to accept...");
+					player_0.getEntityData().setString(TradeInventory.TAG_NAME + "_infoString", "The other player has accepted the trade.");
+				}
+				else
+				{
+					player_0.getEntityData().setString(TradeInventory.TAG_NAME + "_infoString", "");
+					player_1.getEntityData().setString(TradeInventory.TAG_NAME + "_infoString", "");
+				}
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
+	
+	public static enum Status
+	{
+		INCOMPLETE,
+		CANCELLED,
+		ACCEPTED,
+		DENIED
+	}
+}

@@ -1,0 +1,6 @@
+1516312991701	Rename field 'infoString'
+1516315649057	Rename type 'SessionCheckPacket'
+1516315697860	Rename type 'SessionCheckResponsePacket'
+1516315749819	Rename field 'screenOpen'
+1516315761441	Rename local variable 'screenOpen'
+1516323924587	Rename local variable 'var2'

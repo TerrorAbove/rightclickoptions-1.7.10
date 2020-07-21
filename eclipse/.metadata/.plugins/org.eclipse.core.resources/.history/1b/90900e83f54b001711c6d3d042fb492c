@@ -1,0 +1,256 @@
+package com.terrorAndBlue.rightClickOptions.packet;
+
+import com.terrorAndBlue.rightClickOptions.RightClickOptions;
+import com.terrorAndBlue.rightClickOptions.trade.TradeSession;
+import com.terrorAndBlue.rightClickOptions.util.SlotChange;
+
+import cpw.mods.fml.common.network.ByteBufUtils;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+
+public class PutStackPacket implements IMessage
+{
+	private int slotNum;
+	private int slotType;//0 is TradeInventorySlot, 1 is TradeOfferSlot
+	private ItemStack stack;
+	
+	public PutStackPacket() {}
+	
+	public PutStackPacket(ItemStack stack, int slotNum, int slotType)
+	{
+		this.stack = stack;
+		this.slotNum = slotNum;
+		this.slotType = slotType;
+	}
+	
+	public static class Handler implements IMessageHandler<PutStackPacket, IMessage>
+	{
+		@Override
+		public IMessage onMessage(PutStackPacket message, MessageContext ctx)
+		{
+			EntityPlayer p = ctx.getServerHandler().playerEntity;
+			
+			//TODO fix, stacks still being duplicated
+			
+			for(TradeSession sesh : RightClickOptions.tradeSessions)
+			{
+				if(sesh.getP0().getEntityId() == p.getEntityId())
+				{
+					SlotChange prev = sesh.getP0LastPickup();
+					
+					if(prev != null)
+					{
+						if(prev.type == 0)
+						{
+							if(message.slotType == 1)//from inventory to offer slot
+							{
+								if(message.stack != null)
+								{
+									sesh.getTradeInv0().setInventorySlotContents(message.slotNum, message.stack);
+									sesh.getTradeInv1().setInventorySlotContents(message.slotNum + 9, message.stack);
+									
+									if(prev.stack != null)
+										sesh.getP0().inventory.decrStackSize(prev.slotNum, message.stack.stackSize - prev.stack.stackSize);
+									else
+										sesh.getP0().inventory.decrStackSize(prev.slotNum, message.stack.stackSize);
+								}
+								else
+								{
+									sesh.getTradeInv0().setInventorySlotContents(message.slotNum, null);
+									sesh.getTradeInv1().setInventorySlotContents(message.slotNum + 9, null);
+									
+									if(prev.stack != null)
+										sesh.getP0().inventory.setInventorySlotContents(prev.slotNum, prev.stack);
+									else
+										sesh.getP0().inventory.setInventorySlotContents(prev.slotNum, null);
+								}
+
+								sesh.setP0Accepted(false);//slots changed so cancel acceptance for both players
+								sesh.setP1Accepted(false);
+							}
+							else//from inventory to inventory slot
+							{
+								sesh.getP0().inventory.setInventorySlotContents(message.slotNum, message.stack);
+								sesh.getP0().inventory.setInventorySlotContents(prev.slotNum, prev.stack);
+							}
+						}
+						else
+						{
+							if(message.slotType == 1)//from offer to offer slot
+							{
+								if(message.stack != null)
+								{
+									sesh.getTradeInv0().setInventorySlotContents(message.slotNum, message.stack);
+									sesh.getTradeInv1().setInventorySlotContents(message.slotNum + 9, message.stack);
+									
+									if(prev.stack != null)
+									{
+										sesh.getTradeInv0().decrStackSize(prev.slotNum, message.stack.stackSize - prev.stack.stackSize);
+										sesh.getTradeInv1().decrStackSize(prev.slotNum + 9, message.stack.stackSize - prev.stack.stackSize);
+									}
+									else
+									{
+										sesh.getTradeInv0().decrStackSize(prev.slotNum, message.stack.stackSize);
+										sesh.getTradeInv1().decrStackSize(prev.slotNum + 9, message.stack.stackSize);
+									}
+								}
+								else
+								{
+									sesh.getTradeInv0().setInventorySlotContents(message.slotNum, null);
+									sesh.getTradeInv1().setInventorySlotContents(message.slotNum + 9, null);
+								}
+							}
+							else//from offer to inventory slot
+							{
+								if(message.stack != null)
+								{
+									sesh.getP0().inventory.setInventorySlotContents(message.slotNum, message.stack);
+									
+									if(prev.stack != null)
+									{
+										sesh.getTradeInv0().decrStackSize(prev.slotNum, message.stack.stackSize - prev.stack.stackSize);
+										sesh.getTradeInv1().decrStackSize(prev.slotNum + 9, message.stack.stackSize - prev.stack.stackSize);
+									}
+									else
+									{
+										sesh.getTradeInv0().decrStackSize(prev.slotNum, message.stack.stackSize);
+										sesh.getTradeInv1().decrStackSize(prev.slotNum + 9, message.stack.stackSize);
+									}
+								}
+								else
+								{
+									sesh.getP0().inventory.setInventorySlotContents(message.slotNum, null);
+								}
+							}
+						}
+						
+						sesh.setNeedsOfferSlotUpdate();
+						sesh.setNeedsInventorySlotUpdate();
+					}
+					
+					break;
+				}
+				else if(sesh.getP1().getEntityId() == p.getEntityId())
+				{
+					SlotChange prev = sesh.getP1LastPickup();
+					
+					if(prev != null)
+					{
+						if(prev.type == 0)
+						{
+							if(message.slotType == 1)//from inventory to offer slot
+							{
+								if(message.stack != null)
+								{
+									sesh.getTradeInv1().setInventorySlotContents(message.slotNum, message.stack);
+									sesh.getTradeInv0().setInventorySlotContents(message.slotNum + 9, message.stack);
+									
+									if(prev.stack != null)
+										sesh.getP1().inventory.decrStackSize(prev.slotNum, message.stack.stackSize - prev.stack.stackSize);
+									else
+										sesh.getP1().inventory.decrStackSize(prev.slotNum, message.stack.stackSize);
+								}
+								else
+								{
+									sesh.getTradeInv1().setInventorySlotContents(message.slotNum, null);
+									sesh.getTradeInv0().setInventorySlotContents(message.slotNum + 9, null);
+									
+									if(prev.stack != null)
+										sesh.getP1().inventory.setInventorySlotContents(prev.slotNum, prev.stack);
+									else
+										sesh.getP1().inventory.setInventorySlotContents(prev.slotNum, null);
+								}
+
+								sesh.setP0Accepted(false);//slots changed so cancel acceptance for both players
+								sesh.setP1Accepted(false);
+							}
+							else//from inventory to inventory slot
+							{
+								sesh.getP1().inventory.setInventorySlotContents(message.slotNum, message.stack);
+								sesh.getP1().inventory.setInventorySlotContents(prev.slotNum, prev.stack);
+							}
+						}
+						else
+						{
+							if(message.slotType == 1)//from offer to offer slot
+							{
+								if(message.stack != null)
+								{
+									sesh.getTradeInv1().setInventorySlotContents(message.slotNum, message.stack);
+									sesh.getTradeInv0().setInventorySlotContents(message.slotNum + 9, message.stack);
+									
+									if(prev.stack != null)
+									{
+										sesh.getTradeInv1().decrStackSize(prev.slotNum, message.stack.stackSize - prev.stack.stackSize);
+										sesh.getTradeInv0().decrStackSize(prev.slotNum + 9, message.stack.stackSize - prev.stack.stackSize);
+									}
+									else
+									{
+										sesh.getTradeInv1().decrStackSize(prev.slotNum, message.stack.stackSize);
+										sesh.getTradeInv0().decrStackSize(prev.slotNum + 9, message.stack.stackSize);
+									}
+								}
+								else
+								{
+									sesh.getTradeInv1().setInventorySlotContents(message.slotNum, null);
+									sesh.getTradeInv0().setInventorySlotContents(message.slotNum + 9, null);
+								}
+							}
+							else//from offer to inventory slot
+							{
+								if(message.stack != null)
+								{
+									sesh.getP1().inventory.setInventorySlotContents(message.slotNum, message.stack);
+									
+									if(prev.stack != null)
+									{
+										sesh.getTradeInv1().decrStackSize(prev.slotNum, message.stack.stackSize - prev.stack.stackSize);
+										sesh.getTradeInv0().decrStackSize(prev.slotNum + 9, message.stack.stackSize - prev.stack.stackSize);
+									}
+									else
+									{
+										sesh.getTradeInv1().decrStackSize(prev.slotNum, message.stack.stackSize);
+										sesh.getTradeInv0().decrStackSize(prev.slotNum + 9, message.stack.stackSize);
+									}
+								}
+								else
+								{
+									sesh.getP1().inventory.setInventorySlotContents(message.slotNum, null);
+								}
+							}
+						}
+						
+						sesh.setNeedsOfferSlotUpdate();
+						sesh.setNeedsInventorySlotUpdate();
+						
+						System.out.println(prev);
+						System.out.println(new SlotChange(message.stack, message.slotNum, message.slotType));
+					}
+					
+					break;
+				}
+			}
+			return null;
+		}
+	}
+
+	@Override
+	public void fromBytes(ByteBuf buf)
+	{
+		slotNum = buf.readInt();
+		slotType = buf.readInt();
+		stack = ByteBufUtils.readItemStack(buf);
+	}
+
+	@Override
+	public void toBytes(ByteBuf buf)
+	{
+		buf.writeInt(slotNum);
+		buf.writeInt(slotType);
+		ByteBufUtils.writeItemStack(buf, stack);
+	}
+}

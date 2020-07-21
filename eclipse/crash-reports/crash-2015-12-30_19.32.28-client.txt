@@ -1,0 +1,109 @@
+---- Minecraft Crash Report ----
+// Everything's going to plan. No, really, that was supposed to happen.
+
+Time: 12/30/15 7:32 PM
+Description: Unexpected error
+
+java.lang.IndexOutOfBoundsException: Index: 45, Size: 45
+	at java.util.ArrayList.rangeCheck(ArrayList.java:604)
+	at java.util.ArrayList.get(ArrayList.java:382)
+	at net.minecraft.inventory.Container.getSlot(SourceFile:104)
+	at net.minecraft.inventory.Container.putStacksInSlots(SourceFile:390)
+	at net.minecraft.client.network.NetHandlerPlayClient.handleWindowItems(NetHandlerPlayClient.java:1057)
+	at net.minecraft.network.play.server.S30PacketWindowItems.processPacket(SourceFile:49)
+	at net.minecraft.network.play.server.S30PacketWindowItems.processPacket(SourceFile:11)
+	at net.minecraft.network.NetworkManager.processReceivedPackets(NetworkManager.java:212)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.updateController(PlayerControllerMP.java:273)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1602)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:973)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:898)
+	at net.minecraft.client.main.Main.main(SourceFile:148)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(Unknown Source)
+	at GradleStart.main(Unknown Source)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at java.util.ArrayList.rangeCheck(ArrayList.java:604)
+	at java.util.ArrayList.get(ArrayList.java:382)
+	at net.minecraft.inventory.Container.getSlot(SourceFile:104)
+	at net.minecraft.inventory.Container.putStacksInSlots(SourceFile:390)
+	at net.minecraft.client.network.NetHandlerPlayClient.handleWindowItems(NetHandlerPlayClient.java:1057)
+	at net.minecraft.network.play.server.S30PacketWindowItems.processPacket(SourceFile:49)
+	at net.minecraft.network.play.server.S30PacketWindowItems.processPacket(SourceFile:11)
+	at net.minecraft.network.NetworkManager.processReceivedPackets(NetworkManager.java:212)
+	at net.minecraft.client.multiplayer.PlayerControllerMP.updateController(PlayerControllerMP.java:273)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 2 total; [EntityClientPlayerMP['Player840'/392, l='MpServer', x=161.53, y=71.62, z=250.30], EntityOtherPlayerMP['Player234'/293, l='MpServer', x=161.31, y=70.00, z=251.69]]
+	Chunk stats: MultiplayerChunkCache: 289, 289
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: World: (168,64,256), Chunk: (at 8,4,0 in 10,16; contains blocks 160,0,256 to 175,255,271), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 223932 game time, 1711 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: survival (ID 0). Hardcore: false. Cheats: false
+	Forced entities: 46 total; [EntityClientPlayerMP['Player840'/392, l='MpServer', x=161.53, y=71.62, z=250.30], EntityOtherPlayerMP['Player234'/293, l='MpServer', x=161.31, y=70.00, z=251.69], EntityBat['Bat'/141, l='MpServer', x=164.75, y=53.10, z=254.25], EntityBat['Bat'/140, l='MpServer', x=161.25, y=61.10, z=225.75], EntityBat['Bat'/143, l='MpServer', x=171.63, y=59.10, z=242.00], EntityBat['Bat'/142, l='MpServer', x=170.56, y=56.10, z=242.25], EntityBat['Bat'/128, l='MpServer', x=157.56, y=52.10, z=263.25], EntityCow['Cow'/78, l='MpServer', x=84.63, y=65.00, z=244.47], EntityCow['Cow'/79, l='MpServer', x=88.56, y=65.00, z=272.16], EntityCow['Cow'/193, l='MpServer', x=240.50, y=74.00, z=247.69], EntityBat['Bat'/152, l='MpServer', x=176.75, y=62.10, z=233.75], EntityBat['Bat'/153, l='MpServer', x=190.34, y=61.10, z=232.50], EntityBat['Bat'/154, l='MpServer', x=182.25, y=57.10, z=240.50], EntityBat['Bat'/155, l='MpServer', x=181.25, y=56.10, z=240.41], EntityCow['Cow'/81, l='MpServer', x=92.50, y=81.00, z=317.50], EntityChicken['Chicken'/80, l='MpServer', x=89.50, y=82.00, z=307.50], EntityCow['Cow'/93, l='MpServer', x=98.38, y=82.00, z=303.47], EntityBat['Bat'/144, l='MpServer', x=161.25, y=53.10, z=261.25], EntityCow['Cow'/92, l='MpServer', x=108.38, y=86.00, z=291.41], EntityCow['Cow'/95, l='MpServer', x=96.47, y=82.00, z=307.47], EntityCow['Cow'/146, l='MpServer', x=189.47, y=71.00, z=218.47], EntityCow['Cow'/94, l='MpServer', x=99.50, y=81.00, z=305.50], EntityBat['Bat'/147, l='MpServer', x=178.75, y=64.10, z=223.53], EntityCow['Cow'/89, l='MpServer', x=109.50, y=69.00, z=233.50], EntityBat['Bat'/148, l='MpServer', x=182.25, y=64.10, z=224.00], EntityCow['Cow'/149, l='MpServer', x=187.06, y=72.00, z=220.84], EntityChicken['Chicken'/91, l='MpServer', x=108.66, y=82.00, z=286.47], EntityBat['Bat'/150, l='MpServer', x=182.25, y=58.10, z=239.75], EntityCow['Cow'/90, l='MpServer', x=111.56, y=70.00, z=237.72], EntityBat['Bat'/151, l='MpServer', x=180.41, y=61.10, z=232.78], EntityCow['Cow'/170, l='MpServer', x=209.97, y=86.00, z=236.06], EntityCow['Cow'/96, l='MpServer', x=97.53, y=82.00, z=308.53], EntityCow['Cow'/108, l='MpServer', x=117.13, y=81.00, z=286.94], EntityCow['Cow'/161, l='MpServer', x=193.53, y=71.00, z=219.50], EntityCow['Cow'/109, l='MpServer', x=112.38, y=85.00, z=295.59], EntityCow['Cow'/106, l='MpServer', x=113.50, y=74.00, z=233.50], EntityCow['Cow'/107, l='MpServer', x=120.47, y=73.00, z=281.47], EntityCow['Cow'/118, l='MpServer', x=138.53, y=66.00, z=330.47], EntityOtherPlayerMP['Player234'/293, l='MpServer', x=161.31, y=70.00, z=251.69], EntityBat['Bat'/127, l='MpServer', x=158.59, y=53.10, z=257.78], EntityBat['Bat'/126, l='MpServer', x=156.06, y=52.10, z=261.50], EntityBat['Bat'/419, l='MpServer', x=242.25, y=14.15, z=325.00], EntityBat['Bat'/125, l='MpServer', x=158.75, y=50.10, z=262.38], EntityCow['Cow'/124, l='MpServer', x=154.94, y=68.00, z=204.16], EntityCow['Cow'/180, l='MpServer', x=226.38, y=81.00, z=222.25], EntityCow['Cow'/181, l='MpServer', x=227.22, y=75.00, z=233.69]]
+	Retry entities: 0 total; []
+	Server brand: fml,forge
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:373)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2444)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:927)
+	at net.minecraft.client.main.Main.main(SourceFile:148)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:601)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(Unknown Source)
+	at GradleStart.main(Unknown Source)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.7.10
+	Operating System: Windows 7 (x86) version 6.1
+	Java Version: 1.7.0_06, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) Client VM (mixed mode, sharing), Oracle Corporation
+	Memory: 52407504 bytes (49 MB) / 163901440 bytes (156 MB) up to 259522560 bytes (247 MB)
+	JVM Flags: 0 total; 
+	AABB Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	IntCache: cache: 0, tcache: 0, allocated: 13, tallocated: 95
+	FML: MCP v9.05 FML v7.10.99.99 Minecraft Forge 10.13.4.1448 4 mods loaded, 4 mods active
+	States: 'U' = Unloaded 'L' = Loaded 'C' = Constructed 'H' = Pre-initialized 'I' = Initialized 'J' = Post-initialized 'A' = Available 'D' = Disabled 'E' = Errored
+	UCHIJA	mcp{9.05} [Minecraft Coder Pack] (minecraft.jar) 
+	UCHIJA	FML{7.10.99.99} [Forge Mod Loader] (forgeBin-1.7.10-10.13.4.1448-1.7.10.jar) 
+	UCHIJA	Forge{10.13.4.1448} [Minecraft Forge] (forgeBin-1.7.10-10.13.4.1448-1.7.10.jar) 
+	UCHIJA	RightClickOptions{1.5} [Right Click Options] (rightClickOptions-1.5.jar) 
+	GL info: ' Vendor: 'ATI Technologies Inc.' Version: '3.2.9551 Compatibility Profile Context' Renderer: 'RS880'
+	Launched Version: 1.7.10
+	LWJGL: 2.9.1
+	OpenGL: RS880 GL version 3.2.9551 Compatibility Profile Context, ATI Technologies Inc.
+	GL Caps: Using GL 1.3 multitexturing.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Anisotropic filtering is supported and maximum anisotropy is 16.
+Shaders are available because OpenGL 2.1 is supported.
+
+	Is Modded: Definitely; Client brand changed to 'fml,forge'
+	Type: Client (map_client.txt)
+	Resource Packs: []
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	Vec3 Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	Anisotropic Filtering: Off (1)

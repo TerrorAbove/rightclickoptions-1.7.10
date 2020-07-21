@@ -1,0 +1,21 @@
+{
+  "modListVersion": 2,
+  "modList": [{
+    "modid": "RightClickOptions",
+    "name": "Right Click Options",
+    "description": "RCO is a mod which allows the player to do certain actions by simply right clicking another player.",
+    "version": "1.1",
+    "mcversion": "1.7.10",
+    "url": "N/A",
+    "updateUrl": "",
+    "authorList": [ "Terror Above", "Bluesnake198" ],
+    "credits": "Programmed by Terror, textured by Bluesnake",
+    "logoFile": "",
+    "screenshots": [],
+    "parent": "",
+    "requiredMods": [ "Forge" ],
+    "dependencies": [],
+    "dependants": [],
+    "useDependencyInformation": false
+  }]
+}

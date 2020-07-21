@@ -1,0 +1,53 @@
+package com.terrorAndBlue.rightClickOptions.util;
+
+import com.terrorAndBlue.rightClickOptions.RightClickOptions;
+import com.terrorAndBlue.rightClickOptions.packet.PickupStackPacket;
+import com.terrorAndBlue.rightClickOptions.packet.PutStackPacket;
+import com.terrorAndBlue.rightClickOptions.trade.TradeInventory;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+
+public class TradeOfferSlot extends Slot
+{
+	private Highlight highlight;
+	
+	public TradeOfferSlot(IInventory inv, int slot_ID_within_Inv, int x_on_screen, int y_on_screen)
+	{
+		super(inv, slot_ID_within_Inv, x_on_screen, y_on_screen);
+		this.highlight = Highlight.NONE;
+	}
+	
+	public void onPickupFromSlot(EntityPlayer p, ItemStack s)
+	{
+		RightClickOptions.wrapper.sendToServer(new PickupStackPacket(s, getSlotIndex(), 1));
+		
+		super.onPickupFromSlot(p, s);
+	}
+	
+	public void putStack(ItemStack s)
+	{
+		RightClickOptions.wrapper.sendToServer(new PutStackPacket(s, getSlotIndex(), 1));
+		
+		super.putStack(s);
+	}
+	
+	public void setHighlight(Highlight h)
+	{
+		this.highlight = h;
+	}
+	
+	public Highlight getHighlight()
+	{
+		return highlight;
+	}
+	
+	//TODO implement this to draw a red/green box around slots to allow users to alert the trade partner
+	//if they would like less/more of an item
+	public enum Highlight
+	{
+		RED, GREEN, NONE
+	}
+}

@@ -1,0 +1,58 @@
+[20:33:58] [main/INFO]: Extra: []
+[20:33:58] [main/INFO]: Running with arguments: [--userProperties, {}, --accessToken, {REDACTED}, --assetIndex, 1.7.10, --assetsDir, C:/Users/Home 2010/.gradle/caches/minecraft/assets, --version, 1.7.10, --tweakClass, cpw.mods.fml.common.launcher.FMLTweaker, --tweakClass, net.minecraftforge.gradle.tweakers.CoremodTweaker]
+[20:33:58] [main/INFO]: Loading tweak class name cpw.mods.fml.common.launcher.FMLTweaker
+[20:33:58] [main/INFO]: Using primary tweak class name cpw.mods.fml.common.launcher.FMLTweaker
+[20:33:58] [main/INFO]: Loading tweak class name net.minecraftforge.gradle.tweakers.CoremodTweaker
+[20:33:58] [main/INFO]: Calling tweak class cpw.mods.fml.common.launcher.FMLTweaker
+[20:33:58] [main/INFO]: Forge Mod Loader version 7.99.16.1448 for Minecraft 1.7.10 loading
+[20:33:58] [main/INFO]: Java is Java HotSpot(TM) Client VM, version 1.7.0_06, running on Windows 7:x86:6.1, installed at C:\Program Files (x86)\Java\jdk1.7.0_06\jre
+[20:33:58] [main/INFO]: Managed to load a deobfuscated Minecraft name- we are in a deobfuscated environment. Skipping runtime deobfuscation
+[20:33:58] [main/INFO]: Calling tweak class net.minecraftforge.gradle.tweakers.CoremodTweaker
+[20:33:58] [main/INFO]: Injecting location in coremod cpw.mods.fml.relauncher.FMLCorePlugin
+[20:33:58] [main/INFO]: Injecting location in coremod net.minecraftforge.classloading.FMLForgePlugin
+[20:33:58] [main/INFO]: Loading tweak class name cpw.mods.fml.common.launcher.FMLInjectionAndSortingTweaker
+[20:33:58] [main/INFO]: Loading tweak class name cpw.mods.fml.common.launcher.FMLDeobfTweaker
+[20:33:58] [main/INFO]: Loading tweak class name net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
+[20:33:58] [main/INFO]: Calling tweak class cpw.mods.fml.common.launcher.FMLInjectionAndSortingTweaker
+[20:33:58] [main/INFO]: Calling tweak class cpw.mods.fml.common.launcher.FMLInjectionAndSortingTweaker
+[20:33:58] [main/INFO]: Calling tweak class cpw.mods.fml.relauncher.CoreModManager$FMLPluginWrapper
+[20:33:59] [main/ERROR]: The binary patch set is missing. Either you are in a development environment, or things are not going to work!
+[20:34:00] [main/ERROR]: FML appears to be missing any signature data. This is not a good thing
+[20:34:00] [main/INFO]: Calling tweak class cpw.mods.fml.relauncher.CoreModManager$FMLPluginWrapper
+[20:34:00] [main/INFO]: Calling tweak class cpw.mods.fml.common.launcher.FMLDeobfTweaker
+[20:34:00] [main/INFO]: Calling tweak class net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
+[20:34:00] [main/INFO]: Loading tweak class name cpw.mods.fml.common.launcher.TerminalTweaker
+[20:34:00] [main/INFO]: Calling tweak class cpw.mods.fml.common.launcher.TerminalTweaker
+[20:34:01] [main/INFO]: Launching wrapped minecraft {net.minecraft.client.main.Main}
+[20:34:01] [main/INFO]: Setting user: Player219
+[20:34:03] [Client thread/INFO]: LWJGL Version: 2.9.1
+[20:34:04] [Client thread/INFO]: [cpw.mods.fml.client.SplashProgress:start:188]: ---- Minecraft Crash Report ----
+// Don't do that.
+
+Time: 12/28/15 8:34 PM
+Description: Loading screen debug info
+
+This is just a prompt for computer specs to be printed. THIS IS NOT A ERROR
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- System Details --
+Details:
+	Minecraft Version: 1.7.10
+	Operating System: Windows 7 (x86) version 6.1
+	Java Version: 1.7.0_06, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) Client VM (mixed mode, sharing), Oracle Corporation
+	Memory: 15138728 bytes (14 MB) / 48484352 bytes (46 MB) up to 259522560 bytes (247 MB)
+	JVM Flags: 0 total; 
+	AABB Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: 
+	GL info: ' Vendor: 'ATI Technologies Inc.' Version: '3.2.9551 Compatibility Profile Context' Renderer: 'RS880'
+[20:34:04] [Client thread/INFO]: Attempting early MinecraftForge initialization
+[20:34:04] [Client thread/INFO]: MinecraftForge v10.13.4.1448 Initialized
+[20:34:04] [Client thread/INFO]: Replaced 183 ore recipies
+[20:34:04] [Client thread/INFO]: Completed early MinecraftForge initialization
+[20:34:04] [Client thread/INFO]: Found 0 mods from the command line. Injecting into mod discoverer
+[20:34:04] [Client thread/INFO]: Searching C:\Users\Home 2010\Desktop\RightClick Options\eclipse\mods for mods
